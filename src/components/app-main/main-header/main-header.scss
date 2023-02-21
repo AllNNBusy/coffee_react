@@ -1,4 +1,4 @@
-.header {
+.main_header {
   min-height: 640px;
   background: url('../../../img/main-img/bg/header-bg.jpg') no-repeat center/cover;
   padding: 180px 0 200px 0;
@@ -8,35 +8,7 @@
     color: var(--white-color);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     text-align: center;
-    margin: 0;
-  }
-  &__img {
-    position: relative;
-    margin-top: 20px;
-    text-align: center;
-    &::before {
-      content: '';
-      position: absolute;
-      width: 60px;
-      height: 0px;
-      color: var(--white-color);
-      border: 1px solid #FFFFFF;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-      transform: translateX(-125%) translateY(14px);
-    }
-    &::after {
-      content: '';
-      position: absolute;
-      width: 60px;
-      height: 0px;
-      color: var(--white-color);
-      border: 1px solid #FFFFFF;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-      transform: translateX(14px) translateY(14px);
-    }
-    svg {
-      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    }
+    margin: 0 0 20px 0;
   }
   &__subtitle {
     margin: 35px 0 0 0;

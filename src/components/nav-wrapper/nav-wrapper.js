@@ -4,6 +4,7 @@ import './nav-wrapper.scss';
 
 const NavWrapper = ({nav, activeClass}) => {
 
+
   const items = nav.map(item => {
     const {id, ...itemProps} = item;
     return (
