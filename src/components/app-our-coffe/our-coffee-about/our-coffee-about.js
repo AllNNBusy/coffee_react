@@ -5,14 +5,40 @@ import ProductCards from '../product-cards/product-cards';
 
 import './our-coffee-about.scss';
 
-const OurCoffeeAbout = ({product, test}) => {
-  return (
+const OurCoffeeAbout = (
+  {product, cardsId, onUpdateSearch, filter, onFilterSelect, creatingButtons, productDescription, showCardInformation}) => {
+
+  let aboutCard = <></>;
+  if (productDescription) {
+    aboutCard = showCardInformation.map(({name, country, decr, price}) => {
+      return (
+        <>
+          <div className="our-coffee_aboutcard__img">
+            <img src={require('../../../img/our-coffe-img/img/AROMISTICOCoffee.png')} alt={name} />
+          </div>
+          <div className="our-coffee_aboutcard__items">
+            <h2 className="our-coffee_aboutcard__subtitle fz_24">About it</h2>
+            <DividerBlack/>
+            <p className="our-coffee_aboutcard__descr fz_14">
+              <strong>Country: </strong>
+              {country[0].toUpperCase() + country.slice(1)}</p>
+            <p className="our-coffee_aboutcard__subdescr fz_14">{decr}</p>
+            <p className="our-coffee_aboutcard__subdescr fz_14">
+              <strong>Price: </strong>
+              <strong className="fz_24">{price}</strong>
+            </p>
+          </div>
+        </>
+      )
+    })
+  }
+
+  return ( !productDescription ?
+
     <section className="our-coffee_about">
       <div className="container">
         <div className="our-coffee_about__wrapper">
-          <div className="our-coffee_about__img">
-            <img src={require('../../../img/our-coffe-img/img/our-coffe-photo.png')} alt="girl with coffee mug" />
-          </div>
+          <img src={require('../../../img/our-coffe-img/img/our-coffe-photo.png')} alt="girl with coffee mug" />
           <div className="our-coffee_about__items">
             <h2 className="our-coffee_about__subtitle fz_24">About our beans</h2>
             <DividerBlack/>
@@ -26,10 +52,25 @@ const OurCoffeeAbout = ({product, test}) => {
         </div>
         <div className="our-coffee_about__divider"></div>
         <div className="our-coffee_about__filter">
-          <SearchPanel/>
-          <ProductFilter product={product}/>
+          <SearchPanel onUpdateSearch={onUpdateSearch}/>
+          <ProductFilter
+          creatingButtons={creatingButtons}
+          filter={filter}
+          onFilterSelect={onFilterSelect}/>
         </div>
-        <ProductCards product={product} test={(e, id) => test(e, id)}/>
+        <ProductCards
+          product={product}
+          cardsId={(id) => cardsId(id)}/>
+      </div>
+    </section>
+
+    :
+
+    <section className="our-coffee_aboutcard">
+      <div className="container">
+        <div className="our-coffee_aboutcard__wrapper">
+          {aboutCard}
+        </div>
       </div>
     </section>
   )

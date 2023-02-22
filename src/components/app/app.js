@@ -15,7 +15,10 @@ import MainOurBest from '../app-main/main-ourBest/main-ourBest';
 import OurCoffeeHeader from '../app-our-coffe/our-coffee-header/our-coffee-header';
 import OurCoffeeAbout from '../app-our-coffe/our-coffee-about/our-coffee-about';
 
-
+// app-goodscoffe
+import GoodscoffeeHeader from '../app-goodscoffe/goodscoffee-header/goodscoffee-header';
+import GoodsCoffeeAbout from '../app-goodscoffe/goodscoffee-about/goodscoffee-about';
+import ProductCards from '../app-our-coffe/product-cards/product-cards';
 
 import './app.scss';
 
@@ -30,12 +33,15 @@ class App extends Component {
       ],
       product: [
         {name: 'AROMISTICO Coffee 1 kg', country: 'brasil', decr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', price: '16.99$', id: 1,},
-        {name: 'AROMISTICO Coffee 1 kg', country: 'kenya', decr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', price: '6.99$', id: 2,},
-        {name: 'AROMISTICO Coffee 1 kg', country: 'columbia', decr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', price: '6.99$', id: 3,},
+        {name: 'Solimo Coffee Beans 2 kg', country: 'kenya', decr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', price: '6.99$', id: 2,},
+        {name: 'Presto Coffee Beans 1 kg', country: 'columbia', decr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', price: '6.99$', id: 3,},
         {name: 'AROMISTICO Coffee 1 kg', country: 'brasil', decr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', price: '16.99$', id: 4,},
         {name: 'AROMISTICO Coffee 1 kg', country: 'brasil', decr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', price: '16.99$', id: 5,},
         {name: 'AROMISTICO Coffee 1 kg', country: 'brasil', decr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', price: '16.99$', id: 6,},
-      ]
+      ],
+      term: '',
+      filter: 'all',
+      productDescription: false,
     }
   }
 
@@ -46,13 +52,68 @@ class App extends Component {
     }))
   }
 
-  // cards id
-  test = (e, id) => {
-    console.log(id)
+  // SearchPanel
+  onUpdateSearch = (term) => {
+    this.setState({term: term.toLowerCase()})
   }
 
+  searchProduct = (items, term) => {
+    if (term.length === 0) {
+      return items;
+    }
+
+    return items.filter(({name}) => {
+      return name.toLowerCase().indexOf(term) > -1
+    })
+  }
+
+  // AppFilter
+  onFilterSelect = (filter) => {
+    this.setState({filter})
+  }
+
+  filterPost = (items, filter) => {
+    if (filter === 'all') {
+      return items
+    }
+
+    switch (filter) {
+
+      case 'brasil':
+        return items.filter(({country}) => country === filter)
+      case 'kenya':
+        return items.filter(({country}) => country === filter)
+      case 'columbia':
+        return items.filter(({country}) => country === filter)
+      default:
+        return items;
+    }
+  }
+
+  // cards id
+  cardsId = (clickId) => {
+    this.setState(({productDescription: clickId}))
+  }
+
+  cardItem = (itemId) => {
+    if (!itemId) {
+      return false
+    }
+    return this.state.product.filter(({id}) => id === itemId)
+  }
+
+  hideCardItem = () => {
+    if (this.state.productDescription) {
+      this.setState(({productDescription: false}))
+    }
+    return
+  }
+
+
   render() {
-    const {nav, product} = this.state;
+    const {nav, product, term, filter, productDescription} = this.state;
+    const visibleProduct = this.filterPost(this.searchProduct(product, term), filter);
+    const showCardInformation = this.cardItem(productDescription)
 
     return (
       <>
@@ -60,6 +121,7 @@ class App extends Component {
           <NavWrapper
             nav={nav}
             activeClass={this.activeClass}
+            hideCardItem={this.hideCardItem}
           />
         </nav>
 
@@ -75,23 +137,37 @@ class App extends Component {
           <Route path="/about" element={
             <>
               <OurCoffeeHeader />
-              <OurCoffeeAbout product={product} test={this.test}/>
+              <OurCoffeeAbout
+                product={visibleProduct}
+                creatingButtons={product}
+                cardsId={this.cardsId}
+                onUpdateSearch={this.onUpdateSearch}
+                filter={filter}
+                onFilterSelect={this.onFilterSelect}
+                productDescription={productDescription}
+                showCardInformation={showCardInformation}/>
             </>
           }/>
 
-          <Route path="/goodscoffe" element={<MainOurBest/>}/>
+          <Route path="/goodscoffe" element={
+            <>
+              <GoodscoffeeHeader />
+              <GoodsCoffeeAbout />
+              <ProductCards
+                cardsId={this.cardsId}
+                product={product}/>
+            </>
+          }/>
         </Routes>
 
         <footer className='footer'>
           <NavWrapper
             nav={nav}
             activeClass={this.activeClass}
+            hideCardItem={this.hideCardItem}
           />
           <DividerBlack/>
         </footer>
-
-
-
       </>
     );
   }
