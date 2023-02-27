@@ -10,9 +10,9 @@ const OurCoffeeAbout = (
 
   let aboutCard = <></>;
   if (productDescription) {
-    aboutCard = showCardInformation.map(({name, country, decr, price}) => {
+    aboutCard = showCardInformation.map(({name, country, decr, price}, i) => {
       return (
-        <>
+        <div key={name} className="our-coffee_aboutcard__wrapper">
           <div className="our-coffee_aboutcard__img">
             <img src={require('../../../img/our-coffe-img/img/AROMISTICOCoffee.png')} alt={name} />
           </div>
@@ -28,7 +28,7 @@ const OurCoffeeAbout = (
               <strong className="fz_24">{price}</strong>
             </p>
           </div>
-        </>
+        </div>
       )
     })
   }
@@ -68,9 +68,9 @@ const OurCoffeeAbout = (
 
     <section className="our-coffee_aboutcard">
       <div className="container">
-        <div className="our-coffee_aboutcard__wrapper">
+        <>
           {aboutCard}
-        </div>
+        </>
       </div>
     </section>
   )

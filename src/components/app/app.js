@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, lazy, Suspense } from 'react';
 
 import NavWrapper from '../nav-wrapper/nav-wrapper';
 import DividerBlack from '../divider_black/divider_black';
@@ -12,15 +12,25 @@ import MainAbout from '../app-main/main-about/main-about';
 import MainOurBest from '../app-main/main-ourBest/main-ourBest';
 
 // our-coffe
-import OurCoffeeHeader from '../app-our-coffe/our-coffee-header/our-coffee-header';
-import OurCoffeeAbout from '../app-our-coffe/our-coffee-about/our-coffee-about';
+// import OurCoffeeHeader from '../app-our-coffe/our-coffee-header/our-coffee-header';
+// import OurCoffeeAbout from '../app-our-coffe/our-coffee-about/our-coffee-about';
 
 // app-goodscoffe
-import GoodscoffeeHeader from '../app-goodscoffe/goodscoffee-header/goodscoffee-header';
-import GoodsCoffeeAbout from '../app-goodscoffe/goodscoffee-about/goodscoffee-about';
-import ProductCards from '../app-our-coffe/product-cards/product-cards';
+// import GoodscoffeeHeader from '../app-goodscoffe/goodscoffee-header/goodscoffee-header';
+// import GoodsCoffeeAbout from '../app-goodscoffe/goodscoffee-about/goodscoffee-about';
+// import ProductCards from '../app-our-coffe/product-cards/product-cards';
 
 import './app.scss';
+
+// our-coffe lazy
+const OurCoffeeHeader = lazy(() => import('../app-our-coffe/our-coffee-header/our-coffee-header'))
+const OurCoffeeAbout = lazy(() => import('../app-our-coffe/our-coffee-about/our-coffee-about'))
+
+// app-goodscoffe lazy
+const GoodscoffeeHeader = lazy(() => import('../app-goodscoffe/goodscoffee-header/goodscoffee-header'))
+const GoodsCoffeeAbout = lazy(() => import('../app-goodscoffe/goodscoffee-about/goodscoffee-about'))
+const ProductCards = lazy(() => import('../app-our-coffe/product-cards/product-cards'))
+
 
 class App extends Component {
   constructor(props) {
@@ -136,8 +146,9 @@ class App extends Component {
 
           <Route path="/about" element={
             <>
-              <OurCoffeeHeader />
-              <OurCoffeeAbout
+              <Suspense fallback={<div className="loading">loading...</div>}>
+                <OurCoffeeHeader />
+                <OurCoffeeAbout
                 product={visibleProduct}
                 creatingButtons={product}
                 cardsId={this.cardsId}
@@ -146,16 +157,19 @@ class App extends Component {
                 onFilterSelect={this.onFilterSelect}
                 productDescription={productDescription}
                 showCardInformation={showCardInformation}/>
+              </Suspense>
             </>
           }/>
 
           <Route path="/goodscoffe" element={
             <>
-              <GoodscoffeeHeader />
-              <GoodsCoffeeAbout />
-              <ProductCards
-                cardsId={this.cardsId}
-                product={product}/>
+              <Suspense fallback={<div className="loading">loading...</div>}>
+                <GoodscoffeeHeader />
+                <GoodsCoffeeAbout />
+                <ProductCards
+                  cardsId={this.cardsId}
+                  product={product}/>
+              </Suspense>
             </>
           }/>
         </Routes>

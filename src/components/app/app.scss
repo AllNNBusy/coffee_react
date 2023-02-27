@@ -38,3 +38,13 @@
     }
   }
 }
+
+.loading {
+  background-color: #453232;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: var(--white-color);
+}

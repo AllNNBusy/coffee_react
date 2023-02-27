@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcoffe_react=self.webpackChunkcoffe_react||[]).push([[635],{635:function(e,c,r){r.r(c),r.d(c,{default:function(){return s}});var a=r(184),s=function(){return(0,a.jsx)("header",{className:"goodscoffee_header",children:(0,a.jsx)("div",{className:"container",children:(0,a.jsx)("h1",{className:"goodscoffee_header__title fz_40",children:"For your pleasure"})})})}}}]);
+//# sourceMappingURL=635.1683eb1f.chunk.js.map
