@@ -1,0 +1,40 @@
+.main__product {
+    padding: 80px 0 80px 0;
+    background: url('../../../img/main-img/bg/ourBest-bg.jpg') no-repeat center/cover;
+    min-height: 495px;
+    &__title {
+        text-align: center;
+        color: var(--black-color);
+        font-weight: 400;
+    }
+    &__wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 220px);
+        grid-template-rows: 240px;
+        justify-content: center;
+        grid-column-gap: 70px;
+        margin-top: 40px;
+    }
+    &__item {
+        background: rgba(255, 255, 255, 0.65);
+        border-radius: 8px;
+        padding: 22px;
+        display: grid;
+        grid-template-rows: 134px;
+        img {
+            margin: 0 auto;
+            object-fit: contain;
+            width: 100%;
+            height: 100%;
+        }
+        p {
+            text-align: center;
+            justify-self: end;
+            margin: 10px 0 0 0;
+            white-space: nowrap;
+        }
+    }
+    &__price {
+        font-weight: 700;
+    }
+}

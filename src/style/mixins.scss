@@ -1,0 +1,31 @@
+@mixin divider {
+    position: relative;
+    display: block;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    margin: 0 auto;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 14px;
+        right: 58px;
+        width: 60px;
+        height: 0px;
+        border: 1px solid var(--white-color);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        top: 14px;
+        left: 58px;
+        width: 60px;
+        height: 0px;
+        border: 1px solid var(--white-color);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    }
+    svg {
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+}

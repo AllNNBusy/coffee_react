@@ -1,0 +1,26 @@
+@import '../../style/mixins.scss';
+
+.footer {
+    min-height: 150px;
+    padding: 52px 0 20px 0;
+    display: grid;
+    justify-content: center;
+    grid-row-gap: 30px;
+    li > a {
+        color: var(--black-color);
+    }
+    &__divider {
+        height: 50px;
+        width: 50px;
+        @include divider;
+        &::before {
+            border: 1px solid var(--black-color);
+        }
+        &::after {
+            border: 1px solid var(--black-color);
+        }
+        path {
+            fill: var(--black-color);
+        }
+    }
+}
